@@ -1,0 +1,23 @@
+{
+  "manifest_version": 3,
+  "name": "YoutubeSanity Scraper",
+  "version": "1.0",
+  "description": "Scrapes youtube video titles, images, and links.",
+  "permissions": [
+    "activeTab",
+    "storage",
+    "scripting"
+  ],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "js": ["content.js"]
+    }
+  ],
+  "action": {
+    "default_popup": "popup.html"
+  }
+}
