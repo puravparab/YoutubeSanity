@@ -1,0 +1,21 @@
+{
+	"manifest_version": 3,
+	"name": "YoutubeSanity",
+	"description": "Clean up your youtube recommendations",
+	"version": "0.1.0",
+	"action": {
+		"default_popup": "popup.html"
+	},
+	"background": {
+		"service_worker": "background.js",
+		"type": "module"
+	},
+	"content_scripts": [
+    {
+    	"matches": ["https://www.youtube.com/*"],
+      "js": ["content.js"],
+			"type": "module"
+    }
+  ],
+	"permissions": ["scripting", "activeTab", "storage"]
+}
