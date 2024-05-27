@@ -1,12 +1,4 @@
-interface Video {
-	title: string; // video title
-	image: string; // url to video thumbnail image
-	link: string; // url to video
-	creator: string; // creator name
-	creatorLink: string; // url to creator profile
-	element: HTMLElement; // video HTML element
-	classified: boolean; // Is the video classified?
-}
+import { Video } from '../utilities/interfaces';
 
 let videoList: Video[] = [];
 
@@ -35,13 +27,27 @@ const scrapeVideos = () : void => {
 					creator, 
 					creatorLink,
 					element: video as HTMLElement,
-					classified: false
+					visible: false
 				});
 			}
 		}
   });
-
-	console.log(videoList);
+	// Send the video list to the background script for processing
+  chrome.runtime.sendMessage({ action: 'processVideos', data: videoList });
 }
 
 scrapeVideos();
+
+
+// listen for classification results
+chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
+  if (request.action === 'classificationResult') {
+    const classifiedVideos: Video[] = request.data;
+    classifiedVideos.forEach(classifiedVideo => {
+			const video = videoList.find(v => v.title === classifiedVideo.title);
+      if (video && !classifiedVideo.visible) {
+        video.element.hidden = true; // Hide the video if not visible
+      }
+    });
+  }
+});
