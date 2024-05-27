@@ -16,6 +16,7 @@ const getVideoVisibility = async (videoTitle: string): Promise<boolean | null> =
 	})
 };
 
+// store new videos in local storage
 const storeVideo = async (videos: Video[]): Promise<void> => {
 	return new Promise((resolve) => {
 		chrome.storage.local.get(['videoList'], (result) => {

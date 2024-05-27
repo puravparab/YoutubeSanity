@@ -34,10 +34,7 @@ const scrapeVideos = () : void => {
   });
 	// Send the video list to the background script for processing
   chrome.runtime.sendMessage({ action: 'processVideos', data: videoList });
-}
-
-scrapeVideos();
-
+};
 
 // listen for classification results
 chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
@@ -49,5 +46,12 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
         video.element.hidden = true; // Hide the video if not visible
       }
     });
+  }
+});
+
+// start scraping if user clicks the run button in the popup
+chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
+  if (request.action === 'runScraper') {
+    scrapeVideos();
   }
 });

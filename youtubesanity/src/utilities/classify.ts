@@ -1,7 +1,7 @@
 import { Video } from './interfaces';
 
 const classify = async (videoList: Video[]) : Promise<Video[]> => {
-	console.log("classify", videoList);
+	// console.log("classify", videoList);
 	return videoList;
 };
 
