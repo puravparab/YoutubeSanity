@@ -19,9 +19,8 @@ document.addEventListener('DOMContentLoaded', () => {
       model: modelInput.value,
       apiKey: apiKeyInput.value
     };
-    chrome.storage.local.set(data, () => {
-      console.log('Data stored:', data);
-    });
+		console.log(data);
+    chrome.storage.local.set(data, () => {});
 	};
 
 	document.getElementById('RunBtn')?.addEventListener('click', () => {
