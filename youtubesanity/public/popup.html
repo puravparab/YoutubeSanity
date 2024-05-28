@@ -1,14 +1,57 @@
 <!DOCTYPE html>
 <html>
-<head>
-  <title>YouTube Sanity</title>
-  <style>
-  	body { width: 200px; padding: 10px; }
-    button { width: 100%; padding: 10px; margin-top: 10px; }
-  </style>
-</head>
-<body>
-  <button id="RunBtn">Run</button>
-  <script src="popup.js"></script>
-</body>
+  <head>
+    <title>YouTubeSanity</title>
+    <style>
+      body { 
+        width: 300px; 
+        padding: 10px; 
+        font-family: Arial, sans-serif; 
+        background-color: rgb(24, 25, 30);
+      }
+      h1 { 
+        color: white;
+        width: 100%;
+        text-align: center;
+      }
+      label { 
+        display: flex; 
+        margin-top: 20px;
+        color: rgb(152, 157, 169);
+      }
+      input[type="text"], input[type="password"] { 
+        width: 92%; 
+        padding: 10px; 
+        margin-top: 5px;
+        background-color: rgb(35, 37, 46);
+        border: none;
+        color: white;
+      }
+      button { 
+        width: 99%; 
+        padding: 10px;
+        margin-top: 20px;
+        background-color: rgb(245, 0, 87);
+        color: white;
+        cursor: pointer;
+      }
+    </style>
+  </head>
+
+  <body>
+    <h1>YoutubeSanity</h1>
+
+    <label for="prompt">Prompt:</label>
+    <input type="text" id="prompt" placeholder="Enter your prompt">
+    
+    <label for="model">Model:</label>
+    <input type="text" id="model" placeholder="Enter the model">
+    
+    <label for="apiKey">API Key:</label>
+    <input type="password" id="apiKey" placeholder="Enter API Key">
+    
+    <button id="RunBtn">Run</button>
+    
+    <script src="popup.js"></script>
+  </body>
 </html>
