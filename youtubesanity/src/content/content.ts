@@ -27,7 +27,7 @@ const scrapeVideos = () : void => {
 					creator, 
 					creatorLink,
 					element: video as HTMLElement,
-					visible: false
+					visible: true
 				});
 			}
 		}

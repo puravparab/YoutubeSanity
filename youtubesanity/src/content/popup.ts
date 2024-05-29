@@ -7,8 +7,16 @@ document.addEventListener('DOMContentLoaded', () => {
 
 	// Load stored values from localStorage
 	chrome.storage.local.get(['prompt', 'model', 'apiKey'], (result) => {
-  	if (result.prompt) {promptInput.value = result.prompt;}
-    if (result.model) {modelInput.value = result.model;}
+  	if (result.prompt) {
+			promptInput.value = result.prompt;
+		} else {
+			promptInput.value = "Machine learning, Gen AI, LLMS and Computer science related videos";
+		}
+    if (result.model) {
+			modelInput.value = result.model;
+		} else {
+			modelInput.value = "gpt-4o-2024-05-13";
+		}
     if (result.apiKey) {apiKeyInput.value = result.apiKey;}
   });
 
@@ -19,7 +27,6 @@ document.addEventListener('DOMContentLoaded', () => {
       model: modelInput.value,
       apiKey: apiKeyInput.value
     };
-		console.log(data);
     chrome.storage.local.set(data, () => {});
 	};
 
