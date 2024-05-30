@@ -35,6 +35,7 @@ const storeVideo = async (videos: Video[]): Promise<void> => {
 // listen for the content script
 chrome.runtime.onMessage.addListener(async (request, sender, sendResponse) => {
   if (request.action === 'processVideos') {
+		console.log("Processing videos: ");
     const videoList: Video[] = request.data;
     const unclassifiedVideos: Video[] = [];
     const classifiedVideos: Video[] = [];
@@ -49,9 +50,6 @@ chrome.runtime.onMessage.addListener(async (request, sender, sendResponse) => {
 				unclassifiedVideos.push(video);
 			}
 		}
-
-		console.log("classified: ", classifiedVideos.length);
-		console.log("unclassified: ", unclassifiedVideos.length);
 		
 		// send classified videos back to content.js
 		chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
@@ -62,9 +60,11 @@ chrome.runtime.onMessage.addListener(async (request, sender, sendResponse) => {
 		if (unclassifiedVideos.length > 0){
 			const result = await classify(unclassifiedVideos);
 			await storeVideo(result);
+
+			console.log("classified: " + classifiedVideos.length + ", unclassified: ", unclassifiedVideos.length);
+
 			// send classified videos back to content.js
 			chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
-				console.log("unclassified: ", result);
         chrome.tabs.sendMessage(tabs[0].id!, { action: 'classificationResult', data: result });
       });
 		}

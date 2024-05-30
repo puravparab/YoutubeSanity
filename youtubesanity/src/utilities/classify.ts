@@ -17,17 +17,14 @@ const getConfig = async (): Promise<{ prompt: string; model: string; apiKey: str
 // call the openAI api
 const openAIClassify = async (videos: Video[]): Promise<Video[]> => {
 	const { prompt, model, apiKey } = await getConfig();
-	console.log("model: ", model);
 	const openai = new OpenAI({apiKey: apiKey});
 	const systemPrompt = 'Given a dataset, output a json "output":  with an array with 1 for items related to ' + prompt + ' and 0 for those that are not. No extra tokens only the array.';
-	console.log("systemPrompt: ", systemPrompt);
 
 	const batchSize = 20;
 	const totalBatches = Math.ceil(videos.length / batchSize);
 	for (let i = 0; i < totalBatches; i++){
 		const batchData = videos.slice(i * batchSize, (i + 1) * batchSize);
 		const userPrompt = `Dataset: ${JSON.stringify(batchData.map(video => video.title))}`;
-    console.log("userPrompt: ", userPrompt);
 
 		const ones = Array.from({ length: batchData.length }, () => 1);
 
@@ -41,7 +38,6 @@ const openAIClassify = async (videos: Video[]): Promise<Video[]> => {
       });
 
       const output = JSON.parse(response.choices[0].message.content || `${JSON.stringify(ones)}`);
-      console.log(output);
 			batchData.forEach((video, index) => {
         video.visible = output["output"][index] === 1;
       });

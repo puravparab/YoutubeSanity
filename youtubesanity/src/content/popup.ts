@@ -27,7 +27,16 @@ document.addEventListener('DOMContentLoaded', () => {
       model: modelInput.value,
       apiKey: apiKeyInput.value
     };
-    chrome.storage.local.set(data, () => {});
+		
+		// check if configurations are updated. remove classified videos if true
+		chrome.storage.local.get(['prompt', 'model'], (result) => {
+			if (result.prompt !== data.prompt || result.model !== data.model) {
+				chrome.storage.local.remove('videoList', () => {console.log("video cache reset.")})
+			}
+			// update local storage with new configuration
+			chrome.storage.local.set(data, () => {});
+		})
+    
 	};
 
 	document.getElementById('RunBtn')?.addEventListener('click', () => {
