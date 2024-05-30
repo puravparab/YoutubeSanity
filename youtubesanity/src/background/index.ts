@@ -50,7 +50,8 @@ chrome.runtime.onMessage.addListener(async (request, sender, sendResponse) => {
 			}
 		}
 
-		console.log(classifiedVideos.length, unclassifiedVideos.length);
+		console.log("classified: ", classifiedVideos.length);
+		console.log("unclassified: ", unclassifiedVideos.length);
 		
 		// send classified videos back to content.js
 		chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
