@@ -43,7 +43,28 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
     classifiedVideos.forEach(classifiedVideo => {
 			const video = videoList.find(v => v.title === classifiedVideo.title);
       if (video && !classifiedVideo.visible) {
-        video.element.hidden = true; // Hide the video if not visible
+				// Check if the "Unhide" button already exists
+        const existingUnhideButton = video.element.parentElement?.querySelector('.unhide-button');
+        if (!existingUnhideButton) {
+          // Create a styled "Unhide" button
+          const unhideButton = document.createElement('button');
+          unhideButton.textContent = 'Unhide';
+          unhideButton.classList.add('unhide-button');
+          unhideButton.style.display = 'flex';
+          unhideButton.style.margin = 'auto';
+          unhideButton.style.padding = '5px 10px';
+          unhideButton.style.borderRadius = '4px';
+          unhideButton.style.backgroundColor = '#784ff1';
+          unhideButton.style.color = 'white';
+          unhideButton.style.border = 'none';
+          unhideButton.style.cursor = 'pointer';
+          unhideButton.addEventListener('click', () => {
+						unhideButton.remove();
+						video.element.hidden = false;
+          });
+          video.element.parentElement?.insertBefore(unhideButton, video.element.nextSibling);
+        }
+        video.element.hidden = true;
       }
     });
   }

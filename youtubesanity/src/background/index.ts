@@ -56,12 +56,12 @@ chrome.runtime.onMessage.addListener(async (request, sender, sendResponse) => {
 			chrome.tabs.sendMessage(tabs[0].id!, { action: 'classificationResult', data: classifiedVideos });
 		});
 
+		console.log("classified: " + classifiedVideos.length + ", unclassified: " + unclassifiedVideos.length);
+
 		// classify unclassified videos
 		if (unclassifiedVideos.length > 0){
 			const result = await classify(unclassifiedVideos);
 			await storeVideo(result);
-
-			console.log("classified: " + classifiedVideos.length + ", unclassified: ", unclassifiedVideos.length);
 
 			// send classified videos back to content.js
 			chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
